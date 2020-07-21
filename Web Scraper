@@ -1,0 +1,30 @@
+#Alawi Rashed 
+#Python programmer
+#Using Python to web Scrape
+# import the libraries
+from urllib.request import urlopen
+from bs4 import BeautifulSoup
+
+# copy the url
+url = "https://www.cnn.com/2020/07/20/health/us-coronavirus-monday/index.html"
+
+# ‘page’
+try:
+    page = urlopen(url)
+except:
+    print("Error opening the URL")
+
+# `soup`
+soup = BeautifulSoup(page, 'html.parser')
+
+# copy the <div>
+content = soup.find('div', {"class": "zn-body__read-all"})
+
+article = ''
+for i in content.findAll('div'):
+    article = article + ' ' +  i.text
+print(article)
+
+#scraped text should be saved
+with open('scraped_text.txt', 'w') as file:
+    file.write(article)
